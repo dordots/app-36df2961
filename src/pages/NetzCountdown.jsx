@@ -208,9 +208,9 @@ export default function NetzCountdown() {
                 exit={{ opacity: 0 }}
                 className="text-center w-full px-4"
               >
-                {/* הספירה היורדת - שניות מימין, שעות משמאל */}
+                {/* הספירה היורדת - שעות משמאל, דקות באמצע, שניות מימין */}
                 <div className="flex items-center justify-center gap-[clamp(0.35rem,3vw,1.1rem)] sm:gap-[clamp(0.7rem,4vw,1.8rem)] mb-[clamp(0.45rem,3.5vw,1.6rem)]">
-                  {/* שניות */}
+                  {/* שעות */}
                   <div className="flex flex-col items-center gap-[clamp(0.25rem,1.6vw,0.6rem)]">
                     <motion.div
                       className="font-mono text-[min(15vw,14vh,6rem)] md:text-[min(12vw,11vh,9rem)] font-thin text-white tracking-tight leading-none"
@@ -225,13 +225,12 @@ export default function NetzCountdown() {
                         duration: 3,
                         repeat: Infinity,
                         ease: "easeInOut",
-                        delay: 0.6,
                       }}
                     >
-                      {formatNumber(seconds)}
+                      {formatNumber(hours)}
                     </motion.div>
                     <span className="text-[clamp(0.65rem,2.4vw,1.05rem)] md:text-[clamp(0.85rem,2.1vw,1.3rem)] text-slate-400/60 font-light tracking-[0.3em]">
-                      שניות
+                      שעות
                     </span>
                   </div>
 
@@ -268,7 +267,7 @@ export default function NetzCountdown() {
                     :
                   </span>
 
-                  {/* שעות */}
+                  {/* שניות */}
                   <div className="flex flex-col items-center gap-[clamp(0.25rem,1.6vw,0.6rem)]">
                     <motion.div
                       className="font-mono text-[min(15vw,14vh,6rem)] md:text-[min(12vw,11vh,9rem)] font-thin text-white tracking-tight leading-none"
@@ -283,12 +282,13 @@ export default function NetzCountdown() {
                         duration: 3,
                         repeat: Infinity,
                         ease: "easeInOut",
+                        delay: 0.6,
                       }}
                     >
-                      {formatNumber(hours)}
+                      {formatNumber(seconds)}
                     </motion.div>
                     <span className="text-[clamp(0.65rem,2.4vw,1.05rem)] md:text-[clamp(0.85rem,2.1vw,1.3rem)] text-slate-400/60 font-light tracking-[0.3em]">
-                      שעות
+                      שניות
                     </span>
                   </div>
                 </div>
