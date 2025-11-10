@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import hebrewDate from "hebrew-date";
 
 export default function NetzCountdown() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -41,6 +42,29 @@ export default function NetzCountdown() {
 
   // פורמט עם אפסים מובילים
   const formatNumber = (num) => String(num).padStart(2, "0");
+
+  // חישוב תאריך עברי ולועזי
+  const getHebrewDate = () => {
+    try {
+      const hDate = hebrewDate(currentTime);
+      const monthNames = {
+        1: "תשרי", 2: "חשוון", 3: "כסלו", 4: "טבת", 5: "שבט",
+        6: "אדר", 7: "ניסן", 8: "איר", 9: "סיוון", 10: "תמוז",
+        11: "אב", 12: "אלול", 13: "אדר א"
+      };
+      return `${hDate.date} ב${monthNames[hDate.month] || ""} ${hDate.year}`;
+    } catch (error) {
+      return "";
+    }
+  };
+
+  const getGregorianDate = () => {
+    return currentTime.toLocaleDateString("he-IL", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   // בקשת נעילת מסך לשמירה על המסך דולק כל עוד הדף פתוח
   useEffect(() => {
@@ -126,7 +150,20 @@ export default function NetzCountdown() {
   }, [hours, minutes, seconds]);
 
   return (
-    <div className="min-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex items-center justify-center px-3 sm:px-6 py-6 md:p-8">
+    <div className="min-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex items-center justify-center px-3 sm:px-6 py-6 md:p-8 relative">
+      {/* תאריך בפינה הימנית העליונה */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="absolute top-2 sm:top-4 right-2 sm:right-4 text-right z-20"
+      >
+        <div className="text-[clamp(0.6rem,2vw,0.85rem)] text-slate-400/70 font-light space-y-0.5">
+          <div className="text-slate-300/80">{getHebrewDate()}</div>
+          <div className="text-slate-400/60">{getGregorianDate()}</div>
+        </div>
+      </motion.div>
+
       {/* אלמנטים דקורטיביים ברקע */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
