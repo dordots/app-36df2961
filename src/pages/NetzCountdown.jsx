@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function NetzCountdown() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showNetzMessage, setShowNetzMessage] = useState(false);
+  const wakeLockRef = useRef(null);
+  const isRequestingWakeLockRef = useRef(false);
 
   // עדכון השעון כל 10ms למאיות שנייה חלקות
   useEffect(() => {
@@ -40,6 +42,78 @@ export default function NetzCountdown() {
   // פורמט עם אפסים מובילים
   const formatNumber = (num) => String(num).padStart(2, "0");
 
+  // בקשת נעילת מסך לשמירה על המסך דולק כל עוד הדף פתוח
+  useEffect(() => {
+    if (typeof navigator === "undefined" || !("wakeLock" in navigator)) {
+      return;
+    }
+
+    const interactionEvents = ["pointerup", "touchend", "keydown"];
+
+    function handleRelease() {
+      const currentWakeLock = wakeLockRef.current;
+      if (currentWakeLock) {
+        currentWakeLock.removeEventListener("release", handleRelease);
+      }
+      wakeLockRef.current = null;
+      if (document.visibilityState === "visible") {
+        void requestWakeLock();
+      }
+    }
+
+    async function requestWakeLock() {
+      if (!("wakeLock" in navigator) || isRequestingWakeLockRef.current) {
+        return;
+      }
+      isRequestingWakeLockRef.current = true;
+      try {
+        const wakeLock = await navigator.wakeLock.request("screen");
+        wakeLock.addEventListener("release", handleRelease);
+        wakeLockRef.current = wakeLock;
+      } catch (error) {
+        console.error("נכשלנו בקבלת נעילת מסך:", error);
+      } finally {
+        isRequestingWakeLockRef.current = false;
+      }
+    }
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible" && !wakeLockRef.current) {
+        void requestWakeLock();
+      }
+    };
+
+    const handleUserInteraction = async () => {
+      if (wakeLockRef.current || isRequestingWakeLockRef.current) {
+        return;
+      }
+      await requestWakeLock();
+      if (!wakeLockRef.current) {
+        return;
+      }
+      interactionEvents.forEach((event) => {
+        window.removeEventListener(event, handleUserInteraction);
+      });
+    };
+
+    interactionEvents.forEach((event) => {
+      window.addEventListener(event, handleUserInteraction);
+    });
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      interactionEvents.forEach((event) => {
+        window.removeEventListener(event, handleUserInteraction);
+      });
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (wakeLockRef.current) {
+        wakeLockRef.current.removeEventListener("release", handleRelease);
+        wakeLockRef.current.release().catch(() => null);
+        wakeLockRef.current = null;
+      }
+    };
+  }, []);
+
   // אפקט להצגת הודעת נץ
   useEffect(() => {
     if (hours === 0 && minutes === 0 && seconds === 0) {
@@ -52,7 +126,7 @@ export default function NetzCountdown() {
   }, [hours, minutes, seconds]);
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex flex-col items-center justify-between p-8 relative overflow-hidden" dir="rtl">
+    <div className="min-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex flex-col items-center justify-between p-8 relative overflow-hidden" dir="rtl">
       {/* אלמנטים דקורטיביים ברקע */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -82,7 +156,7 @@ export default function NetzCountdown() {
       </div>
 
       {/* תוכן ראשי */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center justify-between min-h-screen py-12">
+      <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center justify-between min-h-full py-12">
         {/* כותרת עליונה */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

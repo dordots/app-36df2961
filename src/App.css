@@ -1,0 +1,27 @@
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+@supports (min-height: 100dvh) {
+  html,
+  body,
+  #root {
+    min-height: 100dvh;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  overflow: hidden;
+}
+
+@media (orientation: landscape) {
+  body {
+    background-color: hsl(var(--background));
+  }
+}
