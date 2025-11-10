@@ -126,7 +126,7 @@ export default function NetzCountdown() {
   }, [hours, minutes, seconds]);
 
   return (
-    <div className="min-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex flex-col items-center justify-between p-8 relative overflow-hidden" dir="rtl">
+    <div className="min-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex items-center justify-center px-3 sm:px-6 py-6 md:p-8">
       {/* אלמנטים דקורטיביים ברקע */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -156,22 +156,22 @@ export default function NetzCountdown() {
       </div>
 
       {/* תוכן ראשי */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center justify-between min-h-full py-12">
+      <div className="relative z-10 w-full max-w-[min(92vw,960px)] mx-auto flex flex-col items-center justify-center gap-[clamp(0.5rem,3.2vw,1.5rem)] text-balance px-1 sm:px-2 py-2 sm:py-3 overflow-y-auto">
         {/* כותרת עליונה */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-center"
+          className="text-center space-y-[clamp(0.25rem,1.8vw,0.75rem)]"
         >
-          <h1 className="text-2xl md:text-3xl font-light text-slate-300/70 tracking-[0.3em] mb-2">
+          <h1 className="text-[min(5.5vw,4.5vh,2.2rem)] font-light text-slate-300/70 tracking-[0.28em]">
             מושב רווחה
           </h1>
-          <div className="h-px w-32 bg-gradient-to-r from-transparent via-slate-400/30 to-transparent mx-auto" />
+          <div className="h-px w-[min(22vw,18vh,8rem)] bg-gradient-to-r from-transparent via-slate-400/30 to-transparent mx-auto" />
         </motion.div>
 
         {/* שעון הספירה */}
-        <div className="flex-1 flex items-center justify-center w-full">
+        <div className="w-full flex items-center justify-center">
           <AnimatePresence mode="wait">
             {showNetzMessage ? (
               <motion.div
@@ -209,11 +209,11 @@ export default function NetzCountdown() {
                 className="text-center w-full px-4"
               >
                 {/* הספירה היורדת - שניות מימין, שעות משמאל */}
-                <div className="flex items-center justify-center gap-2 md:gap-6 mb-8 md:mb-12">
+                <div className="flex items-center justify-center gap-[clamp(0.35rem,3vw,1.1rem)] sm:gap-[clamp(0.7rem,4vw,1.8rem)] mb-[clamp(0.45rem,3.5vw,1.6rem)]">
                   {/* שניות */}
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center gap-[clamp(0.25rem,1.6vw,0.6rem)]">
                     <motion.div
-                      className="font-mono text-7xl md:text-[12rem] lg:text-[16rem] font-thin text-white tracking-tight leading-none"
+                      className="font-mono text-[min(15vw,14vh,6rem)] md:text-[min(12vw,11vh,9rem)] font-thin text-white tracking-tight leading-none"
                       animate={{
                         textShadow: [
                           "0 0 20px rgba(255,255,255,0.3)",
@@ -230,19 +230,19 @@ export default function NetzCountdown() {
                     >
                       {formatNumber(seconds)}
                     </motion.div>
-                    <span className="text-sm md:text-xl text-slate-400/60 font-light tracking-widest mt-2 md:mt-4">
+                    <span className="text-[clamp(0.65rem,2.4vw,1.05rem)] md:text-[clamp(0.85rem,2.1vw,1.3rem)] text-slate-400/60 font-light tracking-[0.3em]">
                       שניות
                     </span>
                   </div>
 
-                  <span className="text-5xl md:text-8xl text-slate-500/50 font-thin mb-8 md:mb-16">
+                  <span className="text-[clamp(2.1rem,9vw,3.5rem)] text-slate-500/50 font-thin">
                     :
                   </span>
 
                   {/* דקות */}
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center gap-[clamp(0.25rem,1.6vw,0.6rem)]">
                     <motion.div
-                      className="font-mono text-7xl md:text-[12rem] lg:text-[16rem] font-thin text-white tracking-tight leading-none"
+                      className="font-mono text-[min(15vw,14vh,6rem)] md:text-[min(12vw,11vh,9rem)] font-thin text-white tracking-tight leading-none"
                       animate={{
                         textShadow: [
                           "0 0 20px rgba(255,255,255,0.3)",
@@ -259,19 +259,19 @@ export default function NetzCountdown() {
                     >
                       {formatNumber(minutes)}
                     </motion.div>
-                    <span className="text-sm md:text-xl text-slate-400/60 font-light tracking-widest mt-2 md:mt-4">
+                    <span className="text-[clamp(0.65rem,2.4vw,1.05rem)] md:text-[clamp(0.85rem,2.1vw,1.3rem)] text-slate-400/60 font-light tracking-[0.3em]">
                       דקות
                     </span>
                   </div>
 
-                  <span className="text-5xl md:text-8xl text-slate-500/50 font-thin mb-8 md:mb-16">
+                  <span className="text-[clamp(2.1rem,9vw,3.5rem)] text-slate-500/50 font-thin">
                     :
                   </span>
 
                   {/* שעות */}
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center gap-[clamp(0.25rem,1.6vw,0.6rem)]">
                     <motion.div
-                      className="font-mono text-7xl md:text-[12rem] lg:text-[16rem] font-thin text-white tracking-tight leading-none"
+                      className="font-mono text-[min(15vw,14vh,6rem)] md:text-[min(12vw,11vh,9rem)] font-thin text-white tracking-tight leading-none"
                       animate={{
                         textShadow: [
                           "0 0 20px rgba(255,255,255,0.3)",
@@ -287,7 +287,7 @@ export default function NetzCountdown() {
                     >
                       {formatNumber(hours)}
                     </motion.div>
-                    <span className="text-sm md:text-xl text-slate-400/60 font-light tracking-widest mt-2 md:mt-4">
+                    <span className="text-[clamp(0.65rem,2.4vw,1.05rem)] md:text-[clamp(0.85rem,2.1vw,1.3rem)] text-slate-400/60 font-light tracking-[0.3em]">
                       שעות
                     </span>
                   </div>
@@ -295,7 +295,7 @@ export default function NetzCountdown() {
 
                 {/* מאיות שנייה - קטנות יותר */}
                 <motion.div
-                  className="text-center mb-8"
+                  className="text-center mt-[clamp(0.25rem,1.8vw,0.75rem)]"
                   animate={{ opacity: [0.4, 1, 0.4] }}
                   transition={{
                     duration: 1.5,
@@ -303,7 +303,7 @@ export default function NetzCountdown() {
                     ease: "easeInOut",
                   }}
                 >
-                  <span className="font-mono text-3xl md:text-5xl text-slate-400/70 font-thin">
+                  <span className="font-mono text-[min(6.5vw,6.5vh,2.4rem)] md:text-[min(6vw,6vh,3.1rem)] text-slate-400/70 font-thin">
                     {formatNumber(milliseconds)}
                   </span>
                   <span className="text-sm md:text-lg text-slate-500/50 mr-3">
@@ -333,14 +333,14 @@ export default function NetzCountdown() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="text-center"
+          className="text-center space-y-[clamp(0.35rem,2vw,0.9rem)]"
         >
-          <div className="h-px w-32 bg-gradient-to-r from-transparent via-slate-400/30 to-transparent mx-auto mb-4" />
-          <p className="text-lg md:text-2xl text-slate-300/60 font-light tracking-wide">
+          <div className="h-px w-[min(22vw,18vh,8rem)] bg-gradient-to-r from-transparent via-slate-400/30 to-transparent mx-auto" />
+          <p className="text-[min(3.5vw,3vh,1.5rem)] text-slate-300/60 font-light tracking-wide">
             הנץ החמה היום
           </p>
           <motion.p
-            className="text-3xl md:text-4xl text-amber-200/90 font-light mt-3"
+            className="text-[min(4.3vw,3.8vh,2.2rem)] md:text-[min(4.5vw,4vh,3rem)] text-amber-200/90 font-light"
             animate={{
               opacity: [0.8, 1, 0.8],
             }}
