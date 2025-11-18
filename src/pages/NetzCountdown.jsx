@@ -300,16 +300,23 @@ export default function NetzCountdown() {
     };
   }, []);
 
-  // אפקט להצגת הודעת נץ
+  // אפקט להצגת הודעת נץ ברגע שהזמן מגיע לאפס
   useEffect(() => {
-    if (hours === 0 && minutes === 0 && seconds === 0) {
+    if (!showNetzMessage && hours === 0 && minutes === 0 && seconds === 0) {
       setShowNetzMessage(true);
-      const timeout = setTimeout(() => {
-        setShowNetzMessage(false);
-      }, 3000);
-      return () => clearTimeout(timeout);
     }
-  }, [hours, minutes, seconds]);
+  }, [hours, minutes, seconds, showNetzMessage]);
+
+  // אפקט לסגירת הודעת הנץ אחרי 10 שניות
+  useEffect(() => {
+    if (!showNetzMessage) return;
+
+    const timeout = setTimeout(() => {
+      setShowNetzMessage(false);
+    }, 10000); // 10 שניות אחרי הצגת ההודעה נסגור אותה
+
+    return () => clearTimeout(timeout);
+  }, [showNetzMessage]);
 
   return (
     <div className="min-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex items-center justify-center px-3 sm:px-6 py-6 md:p-8 relative">
