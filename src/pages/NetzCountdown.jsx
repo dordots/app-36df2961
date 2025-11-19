@@ -318,8 +318,27 @@ export default function NetzCountdown() {
     return () => clearTimeout(timeout);
   }, [showNetzMessage]);
 
+  const numberSizeClasses =
+    "text-[min(32vw,25vh,16rem)] md:text-[min(18vw,18vh,14rem)] font-semibold drop-shadow-[0_10px_30px_rgba(0,0,0,0.55)]";
+
+  const colonSizeClasses = "text-[clamp(3.5rem,12vw,8rem)] text-slate-100/80";
+
+  const labelSizeClasses =
+    "text-[clamp(1rem,3.2vw,2rem)] md:text-[clamp(1.1rem,2.4vw,2.3rem)] tracking-[0.12em]";
+
+  const millisecondsSizeClasses =
+    "text-[min(14vw,12vh,6.5rem)] md:text-[min(10vw,10vh,5.2rem)]";
+
+  const millisecondsLabelClasses =
+    "text-[clamp(1rem,2vw,1.8rem)] text-slate-200/80";
+
+  const countdownGapClasses =
+    "gap-[clamp(0.8rem,6vw,2.8rem)] sm:gap-[clamp(1rem,7vw,3.2rem)] mb-[clamp(0.6rem,4vw,2.4rem)]";
+
   return (
-    <div className="min-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex items-center justify-center px-3 sm:px-6 py-6 md:p-8 relative">
+    <div
+      className="min-h-[100dvh] w-full bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 flex items-center justify-center px-3 sm:px-6 py-4 md:py-6 relative"
+    >
       {/* תאריך בפינה הימנית העליונה */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -362,7 +381,7 @@ export default function NetzCountdown() {
       </div>
 
       {/* תוכן ראשי */}
-      <div className="relative z-10 w-full max-w-[min(92vw,960px)] mx-auto flex flex-col items-center justify-center gap-[clamp(0.5rem,3.2vw,1.5rem)] text-balance px-1 sm:px-2 py-2 sm:py-3 overflow-y-auto">
+      <div className="relative z-10 w-full max-w-[min(98vw,1400px)] mx-auto flex flex-col items-center justify-center gap-[clamp(0.5rem,3.2vw,1.5rem)] text-balance px-1 sm:px-2 py-2 sm:py-3 overflow-y-auto">
         {/* כותרת עליונה */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -398,10 +417,10 @@ export default function NetzCountdown() {
                     ease: "easeInOut",
                   }}
                 >
-                  <h2 className="text-4xl md:text-6xl font-light text-amber-300 mb-6">
+                  <h2 className="text-[clamp(3.5rem,10vw,7rem)] md:text-[clamp(4.5rem,12vw,9rem)] font-semibold text-amber-200 drop-shadow-[0_10px_30px_rgba(0,0,0,0.45)] mb-8 tracking-wide">
                     ✨ הנץ החמה הגיע! ✨
                   </h2>
-                  <p className="text-xl md:text-2xl text-slate-300/80">
+                  <p className="text-[clamp(1.6rem,5vw,3.2rem)] md:text-[clamp(2rem,6vw,4rem)] text-slate-100/90 font-light tracking-[0.12em]">
                     בוקר של אור וברכה
                   </p>
                 </motion.div>
@@ -415,12 +434,15 @@ export default function NetzCountdown() {
                 className="text-center w-full px-4"
               >
                 {/* הספירה היורדת - שעות משמאל, דקות באמצע, שניות מימין */}
-                <div dir="ltr" className="flex items-center justify-center gap-[clamp(0.35rem,3vw,1.1rem)] sm:gap-[clamp(0.7rem,4vw,1.8rem)] mb-[clamp(0.45rem,3.5vw,1.6rem)]">
+                <div
+                  dir="ltr"
+                  className={`flex items-center justify-center ${countdownGapClasses}`}
+                >
                   {/* שעות */}
                   <div className="flex flex-col items-center gap-[clamp(0.25rem,1.6vw,0.6rem)]">
                     <motion.div
                       dir="ltr"
-                      className="font-mono text-[min(15vw,14vh,6rem)] md:text-[min(12vw,11vh,9rem)] font-thin text-white tracking-tight leading-none"
+                      className={`font-mono text-white tracking-tight leading-none ${numberSizeClasses}`}
                       animate={{
                         textShadow: [
                           "0 0 20px rgba(255,255,255,0.3)",
@@ -436,12 +458,14 @@ export default function NetzCountdown() {
                     >
                       {formatNumber(hours)}
                     </motion.div>
-                    <span className="text-[clamp(0.65rem,2.4vw,1.05rem)] md:text-[clamp(0.85rem,2.1vw,1.3rem)] text-slate-400/60 font-light tracking-[0.3em]">
+                    <span
+                      className={`${labelSizeClasses} text-slate-200/80 font-light uppercase`}
+                    >
                       שעות
                     </span>
                   </div>
 
-                  <span className="text-[clamp(2.1rem,9vw,3.5rem)] text-slate-500/50 font-thin">
+                  <span className={`${colonSizeClasses} font-semibold`}>
                     :
                   </span>
 
@@ -449,7 +473,7 @@ export default function NetzCountdown() {
                   <div className="flex flex-col items-center gap-[clamp(0.25rem,1.6vw,0.6rem)]">
                     <motion.div
                       dir="ltr"
-                      className="font-mono text-[min(15vw,14vh,6rem)] md:text-[min(12vw,11vh,9rem)] font-thin text-white tracking-tight leading-none"
+                      className={`font-mono text-white tracking-tight leading-none ${numberSizeClasses}`}
                       animate={{
                         textShadow: [
                           "0 0 20px rgba(255,255,255,0.3)",
@@ -466,12 +490,14 @@ export default function NetzCountdown() {
                     >
                       {formatNumber(minutes)}
                     </motion.div>
-                    <span className="text-[clamp(0.65rem,2.4vw,1.05rem)] md:text-[clamp(0.85rem,2.1vw,1.3rem)] text-slate-400/60 font-light tracking-[0.3em]">
+                    <span
+                      className={`${labelSizeClasses} text-slate-200/80 font-light uppercase`}
+                    >
                       דקות
                     </span>
                   </div>
 
-                  <span className="text-[clamp(2.1rem,9vw,3.5rem)] text-slate-500/50 font-thin">
+                  <span className={`${colonSizeClasses} font-semibold`}>
                     :
                   </span>
 
@@ -479,7 +505,7 @@ export default function NetzCountdown() {
                   <div className="flex flex-col items-center gap-[clamp(0.25rem,1.6vw,0.6rem)]">
                     <motion.div
                       dir="ltr"
-                      className="font-mono text-[min(15vw,14vh,6rem)] md:text-[min(12vw,11vh,9rem)] font-thin text-white tracking-tight leading-none"
+                      className={`font-mono text-white tracking-tight leading-none ${numberSizeClasses}`}
                       animate={{
                         textShadow: [
                           "0 0 20px rgba(255,255,255,0.3)",
@@ -496,7 +522,9 @@ export default function NetzCountdown() {
                     >
                       {formatNumber(seconds)}
                     </motion.div>
-                    <span className="text-[clamp(0.65rem,2.4vw,1.05rem)] md:text-[clamp(0.85rem,2.1vw,1.3rem)] text-slate-400/60 font-light tracking-[0.3em]">
+                    <span
+                      className={`${labelSizeClasses} text-slate-200/80 font-light uppercase`}
+                    >
                       שניות
                     </span>
                   </div>
@@ -505,7 +533,7 @@ export default function NetzCountdown() {
                 {/* מאיות שנייה - קטנות יותר */}
                 <motion.div
                   dir="ltr"
-                  className="text-center mt-[clamp(0.25rem,1.8vw,0.75rem)]"
+                  className="text-center mt-[clamp(0.15rem,1.2vw,0.5rem)]"
                   animate={{ opacity: [0.4, 1, 0.4] }}
                   transition={{
                     duration: 1.5,
@@ -513,10 +541,12 @@ export default function NetzCountdown() {
                     ease: "easeInOut",
                   }}
                 >
-                  <span className="font-mono text-[min(6.5vw,6.5vh,2.4rem)] md:text-[min(6vw,6vh,3.1rem)] text-slate-400/70 font-thin">
+                  <span
+                    className={`font-mono text-slate-200/80 font-semibold ${millisecondsSizeClasses}`}
+                  >
                     {formatNumber(milliseconds)}
                   </span>
-                  <span className="text-sm md:text-lg text-slate-500/50 mr-3">
+                  <span className={`${millisecondsLabelClasses} mr-3 font-light uppercase`}>
                     מאיות
                   </span>
                 </motion.div>
